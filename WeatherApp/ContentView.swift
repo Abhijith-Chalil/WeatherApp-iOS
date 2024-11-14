@@ -18,12 +18,11 @@ struct ContentView: View {
         WeatherData(dayOfWeek: "FRI", imageName: "sunset.fill", temp: 60),
         WeatherData(dayOfWeek: "SAT", imageName: "snow", temp: 25)
     ]
-
+    
     
     var body: some View {
         ZStack {
-            
-            BackgroundView(isNight: $isNight)
+            BackgroundView(isNight: isNight)
             VStack{
                 CityName(cityName: "Calicut, KL")
                 MainWeatherStatusView(imageName: isNight ? "moon.stars.fill" : "cloud.sun.fill", temp: 76)
@@ -44,6 +43,8 @@ struct ContentView: View {
                 }
                 Spacer()
             }
+        }.onAppear {
+            print("Vstack loaded") // will log the message when the vstack is builded
         }
         
     }
@@ -69,7 +70,7 @@ struct WeatherDayView: View {
 }
 
 struct BackgroundView: View {
-   @Binding var isNight: Bool
+    var isNight: Bool
     var body: some View {
         LinearGradient(gradient: Gradient(colors: [isNight ? .black : .blue, isNight ? .gray : Color("lightBlue")]), startPoint: .topLeading, endPoint:             .bottomTrailing).ignoresSafeArea()
     }
